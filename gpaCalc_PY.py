@@ -88,12 +88,12 @@ class gpaCalc:
             self.newGPA.insert(0, 0.0)
 
         else:
-            self.semGPA.insert(0, points / credits)
+            self.semGPA.insert(0, round(points / credits, 3))
             
             try:
                 points += float(self.currGPA.get()) * float(self.currHours.get())
                 credits += float(self.currHours.get())
-                self.newGPA.insert(0, points / credits)
+                self.newGPA.insert(0, round(points / credits, 3))
 
             except ValueError:
                 self.currGPA.delete(0, END)
