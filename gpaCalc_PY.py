@@ -112,13 +112,14 @@ class classData:
         self.g_field.insert(0, 0)
 
 
-def calculate(current, entered, size, semester, cummulative):
+def calculate(current, semester, cummulative):
+    global num, class_data
     credits = 0
     points = 0
 
-    for i in range(size):
-        credits += entered[i].getCredits()
-        points += entered[i].getPoints()
+    for i in range(num):
+        credits += class_data[i].getCredits()
+        points += class_data[i].getPoints()
 
     semester.delete(0, END)
     cummulative.delete(0, END)
@@ -136,7 +137,9 @@ def calculate(current, entered, size, semester, cummulative):
 
 
 
-def resetForm(current, sem_gpa, new_gpa, entered, size):
+def resetForm(current, sem_gpa, new_gpa):
+    global num, class_data
+
     current.clear()
 
     sem_gpa.delete(0, END)
@@ -145,8 +148,11 @@ def resetForm(current, sem_gpa, new_gpa, entered, size):
     new_gpa.delete(0, END)
     new_gpa.insert(0, 0.0)
 
-    for i in range(size):
-        entered[i].clear()
+    for i in range(num):
+        class_data[i].clear()
+    
+    while num > 6:
+        remove()
 
 
 
@@ -174,6 +180,7 @@ master = Tk()
 
 # Window Title and Geometry
 master.title("GPA Calculator")
+master.geometry("")
 master.configure(bg="#234C67")
 
 #Title Frame
@@ -218,8 +225,8 @@ buttons.columnconfigure(0, weight=1)
 
 Button(buttons, text='+', command=add, width=3).grid(row=0, column=0)
 Button(buttons, text='-', command=remove, width=3).grid(row=0, column=1)
-Button(buttons, text='Reset', command=lambda: resetForm(curr, sem_gpa, new_gpa, class_data, num), width=8).grid(row=0, column=2)
-Button(buttons, text='Calculate', command=lambda: calculate(curr, class_data, num, sem_gpa, new_gpa), width=8).grid(row=0, column=3)
+Button(buttons, text='Reset', command=lambda: resetForm(curr, sem_gpa, new_gpa), width=8).grid(row=0, column=2)
+Button(buttons, text='Calculate', command=lambda: calculate(curr, sem_gpa, new_gpa), width=8).grid(row=0, column=3)
 Button(buttons, text='Quit', command=master.destroy, width=8).grid(row=0, column=4)
 
 
