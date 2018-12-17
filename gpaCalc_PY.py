@@ -70,7 +70,7 @@ class classData:
         self.c_field.grid(row=num, column=1)
         self.c_field.insert(1, 0)
 
-        self.g_field = Entry(frame, width=17)
+        self.g_field = Entry(frame, width=16)
         self.g_field.grid(row=num, column=2)
         self.g_field.insert(1, 0)
 
@@ -209,11 +209,11 @@ bot_frame.columnconfigure(0, weight=1)
 curr = currentGPA(bot_frame)
 
 Label(bot_frame, text="Semester GPA: ").grid(row=0, column=2, sticky="E")
-sem_gpa = Entry(bot_frame, width=7)
+sem_gpa = Entry(bot_frame, width=6)
 sem_gpa.grid(row=0, column=3)
 sem_gpa.insert(0, 0.0)
 
-Label(bot_frame, text="New GPA: ").grid(row=1, column=2, sticky="E")
+Label(bot_frame, text="Resultant GPA: ").grid(row=1, column=2, sticky="E")
 new_gpa = Entry(bot_frame, width=6)
 new_gpa.grid(row=1, column=3)
 new_gpa.insert(0, 0.0)
