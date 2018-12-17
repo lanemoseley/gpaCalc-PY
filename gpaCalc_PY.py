@@ -14,26 +14,42 @@ class currentGPA:
         Label(frame, text="Current GPA: ").grid(row=0, column=0, sticky="E")
         Label(frame, text="Current Hours: ").grid(row=1, column=0, sticky="E")
 
-        self.g_field = Entry(frame)
+        self.g_field = Entry(frame, width=6)
         self.g_field.grid(row=0, column=1)
         self.g_field.insert(0, 0.0)
 
-        self.c_field = Entry(frame)
+        self.c_field = Entry(frame, width=6)
         self.c_field.grid(row=1, column=1)
         self.c_field.insert(0, 0)
 
     def getCredits(self):
         try:
-            credits = int(self.c_field.get())
-            return credits
+            credits = int(float(self.c_field.get()))
+
+            #Ensuring that no negative values are returned
+            if credits > 0:
+                return credits
+            else:
+                self.clear()
+                return 0
+
         except ValueError:
+            self.clear()
             return 0
     
     def getPoints(self):
         try:
-            points = float(self.c_field.get()) * float(self.g_field.get())
-            return points
+            points = int(float(self.c_field.get())) * float(self.g_field.get())
+            
+            #Ensuring that no negative values are returned
+            if points > 0.0:
+                return points
+            else:
+                self.clear()
+                return 0.0
+
         except ValueError:
+            self.clear()
             return 0.0
 
     def clear(self):
@@ -50,26 +66,42 @@ class classData:
         self.l = Label(frame, text="Class #" + str(num-1) + ": ")
         self.l.grid(row=num, column=0, sticky="E")
 
-        self.c_field = Entry(frame)
+        self.c_field = Entry(frame, width=16)
         self.c_field.grid(row=num, column=1)
         self.c_field.insert(1, 0)
 
-        self.g_field = Entry(frame)
+        self.g_field = Entry(frame, width=17)
         self.g_field.grid(row=num, column=2)
         self.g_field.insert(1, 0)
 
     def getCredits(self):
         try:
-            credits = int(self.c_field.get())
-            return credits
+            credits = int(float(self.c_field.get()))
+            
+            #Ensuring that no negative values are returned
+            if credits > 0:
+                return credits
+            else:
+                self.clear()
+                return 0
+
         except ValueError:
+            self.clear()
             return 0
     
     def getPoints(self):
         try:
-            points = float(self.c_field.get()) * float(self.g_field.get())
-            return points
+            points = int(float(self.c_field.get())) * float(self.g_field.get())
+            
+            #Ensuring that no negative values are returned
+            if points > 0.0:
+                return points
+            else:
+                self.clear()
+                return 0.0
+
         except ValueError:
+            self.clear()
             return 0.0
 
     def clear(self):
@@ -142,12 +174,11 @@ master = Tk()
 
 # Window Title and Geometry
 master.title("GPA Calculator")
-master.geometry("600x300")
 master.configure(bg="#234C67")
 
 #Top Frame
 top_frame = Frame(master)
-top_frame.grid(row=0, columnspan=2)
+top_frame.grid(row=0, sticky="W")
 
 Label(top_frame, text="Credits").grid(row=1, column=1)
 Label(top_frame, text="Grade (0.0 - 4.0)").grid(row=1, column=2)
@@ -155,35 +186,31 @@ Label(top_frame, text="Grade (0.0 - 4.0)").grid(row=1, column=2)
 for i in range(num):
     class_data.append(classData(top_frame, i + 2))
 
-#Bottom Left Frame
-bottom_left = Frame(master)
-bottom_left.grid(row=num+1, column=0)
+#Bottom Frame
+bot_frame = Frame(master)
+bot_frame.grid(row=1, sticky="W")
 
-curr = currentGPA(bottom_left)
+curr = currentGPA(bot_frame)
 
-#Bottom Right Frame
-bottom_right = Frame(master)
-bottom_right.grid(row=num+1, column=1)
-
-Label(bottom_right, text="Semester GPA: ").grid(row=0, column=0, sticky="E")
-sem_gpa = Entry(bottom_right)
-sem_gpa.grid(row=0, column=1)
+Label(bot_frame, text="Semester GPA: ").grid(row=0, column=2, sticky="E")
+sem_gpa = Entry(bot_frame, width=7)
+sem_gpa.grid(row=0, column=3)
 sem_gpa.insert(0, 0.0)
 
-Label(bottom_right, text="New GPA: ").grid(row=1, column=0, sticky="E")
-new_gpa = Entry(bottom_right)
-new_gpa.grid(row=1, column=1)
+Label(bot_frame, text="New GPA: ").grid(row=1, column=2, sticky="E")
+new_gpa = Entry(bot_frame, width=6)
+new_gpa.grid(row=1, column=3)
 new_gpa.insert(0, 0.0)
 
 #Button Frame
 buttons = Frame(master)
-buttons.grid(row=num+2, columnspan=2)
+buttons.grid(row=2, sticky="W")
 
-Button(buttons, text='Add Row', command=add, width=10).grid(row=0, column=0)
-Button(buttons, text='Remove Row', command=remove, width=10).grid(row=0, column=1)
-Button(buttons, text='Reset Form', command=lambda: resetForm(curr, sem_gpa, new_gpa, class_data, num), width=10).grid(row=0, column=2)
-Button(buttons, text='Calculate', command=lambda: calculate(curr, class_data, num, sem_gpa, new_gpa), width=10).grid(row=0, column=3)
-Button(buttons, text='Quit', command=master.destroy, width=10).grid(row=0, column=4)
+Button(buttons, text='+', command=add, width=3).grid(row=0, column=0)
+Button(buttons, text='-', command=remove, width=3).grid(row=0, column=1)
+Button(buttons, text='Reset', command=lambda: resetForm(curr, sem_gpa, new_gpa, class_data, num), width=8).grid(row=0, column=2)
+Button(buttons, text='Calculate', command=lambda: calculate(curr, class_data, num, sem_gpa, new_gpa), width=8).grid(row=0, column=3)
+Button(buttons, text='Quit', command=master.destroy, width=8).grid(row=0, column=4)
 
 
  
