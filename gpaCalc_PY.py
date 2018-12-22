@@ -76,6 +76,7 @@ class classData:
 
     def getCredits(self):
         try:
+            #Grabbing input as float incase user inputs a floating point number
             credits = int(float(self.c_field.get()))
             
             #Ensuring that no negative values are returned
@@ -90,19 +91,31 @@ class classData:
             return 0
     
     def getPoints(self):
-        try:
-            points = int(float(self.c_field.get())) * float(self.g_field.get())
-            
-            #Ensuring that no negative values are returned
-            if points > 0.0:
-                return points
-            else:
+        entered = self.g_field.get()
+
+        if entered.lower() == 'a':
+            return self.getCredits() * 4.0
+                
+        elif entered.lower() == 'b':
+            return self.getCredits() * 3.0
+                
+        elif entered.lower() == 'c':
+            return self.getCredits() * 2.0
+                
+        elif entered.lower() == 'd':
+            return self.getCredits()
+
+        elif entered.lower() == 'f':
+            return 0.0
+
+        else:
+            try:
+                entered = self.getCredits() * float(self.g_field.get())
+                return entered
+
+            except ValueError:
                 self.clear()
                 return 0.0
-
-        except ValueError:
-            self.clear()
-            return 0.0
 
     def clear(self):
         self.g_field.delete(0, END)
@@ -196,7 +209,7 @@ top_frame.grid(row=1, sticky=E+W)
 top_frame.columnconfigure(0, weight=1)
 
 Label(top_frame, text="Credits").grid(row=1, column=1)
-Label(top_frame, text="Grade (0.0 - 4.0)").grid(row=1, column=2)
+Label(top_frame, text="Grade").grid(row=1, column=2)
 
 for i in range(num):
     class_data.append(classData(top_frame, i + 2))
