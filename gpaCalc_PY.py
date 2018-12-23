@@ -91,31 +91,23 @@ class classData:
             return 0
     
     def getPoints(self):
+        key = [['A', 4.0], ['A-', 3.7], ['B+', 3.3], ['B', 3.0], ['B-', 2.7],
+               ['C+', 2.3], ['C', 2.0], ['C-', 1.7], ['D+', 1.3], ['D', 1.0],
+               ['D-', 0.7], ['F', 0.0]]
+        
         entered = self.g_field.get()
 
-        if entered.lower() == 'a':
-            return self.getCredits() * 4.0
-                
-        elif entered.lower() == 'b':
-            return self.getCredits() * 3.0
-                
-        elif entered.lower() == 'c':
-            return self.getCredits() * 2.0
-                
-        elif entered.lower() == 'd':
-            return self.getCredits()
+        for i in range(len(key)):
+            if entered.upper() == key[i][0]:
+                return self.getCredits() * key[i][1]
 
-        elif entered.lower() == 'f':
+        try:
+            entered = self.getCredits() * float(self.g_field.get())
+            return entered
+
+        except ValueError:
+            self.clear()
             return 0.0
-
-        else:
-            try:
-                entered = self.getCredits() * float(self.g_field.get())
-                return entered
-
-            except ValueError:
-                self.clear()
-                return 0.0
 
     def clear(self):
         self.g_field.delete(0, END)
