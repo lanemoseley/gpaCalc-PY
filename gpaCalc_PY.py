@@ -181,22 +181,23 @@ def remove():
 
 
 # Beginning of Program
-master = Tk()
+root = Tk()
+root.resizable(False, False)
 
 # Window Title and Geometry
-master.title("GPA Calculator")
-master.geometry("")
-master.configure(bg="#234C67")
+root.title("GPA Calculator")
+root.geometry("")
+root.configure(bg="#234C67")
 
 #Title Frame
-title_frame = Frame(master, border=4, relief=RIDGE)
+title_frame = Frame(root, border=4, relief=RIDGE)
 title_frame.grid(row=0, sticky=E+W)
 title_frame.columnconfigure(0, weight=1)
 
 Label(title_frame, text="GPA Calculator", font="bold").grid(row=0)
 
 #Top Frame
-top_frame = Frame(master, border=4, relief=RIDGE)
+top_frame = Frame(root, border=4, relief=RIDGE)
 top_frame.grid(row=1, sticky=E+W)
 top_frame.columnconfigure(0, weight=1)
 
@@ -207,7 +208,7 @@ for i in range(num):
     class_data.append(classData(top_frame, i + 2))
 
 #Bottom Frame
-bot_frame = Frame(master, border=4, relief=RIDGE)
+bot_frame = Frame(root, border=4, relief=RIDGE)
 bot_frame.grid(row=2, sticky=E+W)
 bot_frame.columnconfigure(0, weight=1)
 
@@ -224,7 +225,7 @@ new_gpa.grid(row=1, column=3)
 new_gpa.insert(0, 0.0)
 
 #Button Frame
-buttons = Frame(master, border=4, relief=RIDGE)
+buttons = Frame(root, border=4, relief=RIDGE)
 buttons.grid(row=3, sticky=E+W)
 buttons.columnconfigure(0, weight=1)
 
@@ -232,7 +233,7 @@ Button(buttons, text='+', command=add, width=3).grid(row=0, column=0)
 Button(buttons, text='-', command=remove, width=3).grid(row=0, column=1)
 Button(buttons, text='Reset', command=lambda: resetForm(curr, sem_gpa, new_gpa), width=8).grid(row=0, column=2)
 Button(buttons, text='Calculate', command=lambda: calculate(curr, sem_gpa, new_gpa), width=8).grid(row=0, column=3)
-Button(buttons, text='Quit', command=master.destroy, width=8).grid(row=0, column=4)
+Button(buttons, text='Quit', command=root.destroy, width=8).grid(row=0, column=4)
 
 
  
